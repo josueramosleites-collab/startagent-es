@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>StartAgent — crea tu agente de IA y véndelo al mundo</title>
+<meta name="description" content="Crea un agente de IA que sigue los partidos en vivo las 24 horas. Si da resultado, alquílalo a personas de todo el mundo. De Oddsfy.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0720;--card:#17113a;--card2:#1d1548;--line:rgba(167,139,250,.22);--ink:#f4f1ff;--mut:#b7add9;--violet:#8b5cf6;--violet2:#6d28d9;--green:#22c55e;--green2:#16a34a;--yellow:#ffd400}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;line-height:1.5;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 40% at 10% 5%,rgba(124,58,237,.5),transparent 70%),radial-gradient(45% 35% at 95% 35%,rgba(34,197,94,.18),transparent 70%),radial-gradient(70% 50% at 50% 110%,rgba(59,130,246,.25),transparent 70%)}
+a{color:inherit}.wrap{max-width:1160px;margin:0 auto;padding-inline:20px}
+header{position:sticky;top:0;z-index:20;background:rgba(11,7,32,.78);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+header .site{margin-left:auto}
+@media (max-width:640px){header .site{display:none}.hero-cta .site,.final .site{margin:10px 0 0 0!important}}
+.brand{font-weight:900;font-size:20px;text-decoration:none}.brand b{color:var(--green)}
+nav.top{display:flex;gap:22px;font-size:14px;font-weight:700;color:var(--mut)}nav.top a{text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:900;text-decoration:none;border-radius:999px;padding:18px 34px;font-size:18px;background:linear-gradient(180deg,#4ade80,var(--green2));color:#04170a;box-shadow:0 14px 40px rgba(34,197,94,.45),0 0 0 4px rgba(255,255,255,.1);transition:transform .15s;border:0;cursor:pointer}
+.btn:hover{transform:translateY(-2px)}.btn.sm{padding:10px 18px;font-size:14px;box-shadow:none}
+.btn.ghost{background:linear-gradient(180deg,#9f7aea,var(--violet2));color:#fff;border:0;box-shadow:0 10px 26px rgba(124,58,237,.4)}
+.eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.35);padding:6px 12px;border-radius:999px;margin-bottom:16px}
+h1{font-size:clamp(36px,4.6vw,58px);line-height:1.03;font-weight:900;letter-spacing:-.03em;text-wrap:balance}h1 em{font-style:normal;color:var(--green)}
+h2{font-size:clamp(28px,3.4vw,42px);line-height:1.08;font-weight:900;letter-spacing:-.02em;text-align:center;text-wrap:balance}
+h3{font-weight:900;letter-spacing:-.01em}
+.sub{text-align:center;color:var(--mut);font-size:18px;max-width:42em;margin:14px auto 40px}
+section{padding-block:72px}
+/* HERO */
+.hero{padding-block:48px 28px;display:grid;grid-template-columns:.95fr 1.05fr;gap:44px;align-items:center}
+.lead{font-size:clamp(17px,1.5vw,20px);color:var(--mut);margin:16px 0 26px;max-width:32em}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px}.hero-cta small{color:var(--mut);font-size:14px}
+.vsl{position:relative;aspect-ratio:16/9;width:100%;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(135deg,#1b1145,#0d0824);box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 90px rgba(124,58,237,.35);display:grid;place-items:center}
+.vsl video{display:block;width:100%;height:100%;object-fit:cover;background:#0b0720}
+.vsl .play{width:96px;height:96px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;box-shadow:0 0 0 14px rgba(255,255,255,.12)}
+.vsl .play:after{content:"";border-left:30px solid #0b0720;border-top:18px solid transparent;border-bottom:18px solid transparent;margin-left:8px}
+.vsl .lbl{position:absolute;left:16px;bottom:14px;font-size:13px;font-weight:800;color:var(--mut)}
+.vsl .badge{position:absolute;right:14px;top:14px;font-size:12px;font-weight:800;background:rgba(255,212,0,.15);color:var(--yellow);border:1px solid rgba(255,212,0,.4);padding:5px 10px;border-radius:999px}
+.stores{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.stores span{font-size:13px;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:7px 12px}
+/* PROVA */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 14px;text-align:center}
+.stat b{display:block;font-size:clamp(26px,2.6vw,36px);font-weight:900;color:var(--green);font-variant-numeric:tabular-nums}
+.stat span{color:var(--mut);font-size:14px}
+.note{color:var(--mut);font-size:13px;text-align:center;margin-top:16px}.note a{color:var(--violet)}
+/* PASSOS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:22px 22px 0;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.step .n{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:var(--violet2);margin-bottom:12px}
+.step h3{font-size:21px}.step p{color:var(--mut);margin:8px 0 18px}
+.phone{margin-top:auto;align-self:center;width:80%;border-radius:28px 28px 0 0;border:7px solid #1d1d26;border-bottom:0;overflow:hidden;background:#fff}
+.phone img{display:block;width:100%;aspect-ratio:840/1050;object-fit:cover;object-position:top}
+/* TIPOS */
+.types{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.type{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:30px;position:relative}
+.type .tag{display:inline-block;font-size:12px;font-weight:800;padding:5px 10px;border-radius:999px;margin-bottom:12px}
+.t-free{background:rgba(139,92,246,.18);color:#c4b5fd}.t-elite{background:rgba(255,212,0,.14);color:var(--yellow)}
+.type h3{font-size:25px}.type p{color:var(--mut);margin:10px 0 14px}
+.type ul{list-style:none;display:grid;gap:9px}.type li{padding-left:26px;position:relative;color:var(--ink)}
+.type li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}
+.type.elite{border-color:rgba(255,212,0,.45)}
+/* OPORTUNIDADE */
+.opp{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.opp h2,.opp .sub{text-align:left;margin-left:0}
+.bigquote{font-size:clamp(46px,6vw,76px);font-weight:900;color:var(--green);line-height:1;letter-spacing:-.03em}
+.oppcard{background:linear-gradient(160deg,rgba(34,197,94,.14),rgba(124,58,237,.12));border:1px solid rgba(34,197,94,.4);border-radius:28px;padding:32px}
+.oppcard p{color:var(--mut);margin-top:10px}
+.flow{display:grid;gap:12px;margin-top:22px}
+.flow div{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.flow i{font-style:normal;font-size:22px;line-height:1}
+/* ELITE */
+.incl{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.inc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;text-align:center}
+.inc b{display:block;font-size:40px;font-weight:900;color:var(--yellow);line-height:1.1}
+.inc span{color:var(--mut);font-size:14px}
+/* PREÇOS */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:28px;display:flex;flex-direction:column}
+.plan h3{font-size:22px}.plan .who{color:var(--mut);font-size:14px;margin-top:4px;min-height:42px}
+.plan .p{font-size:38px;font-weight:900;margin:14px 0 2px;letter-spacing:-.02em}.plan .p small{font-size:15px;color:var(--mut);font-weight:700}
+.plan .p2{color:var(--mut);font-size:14px;min-height:21px}
+.plan ul{list-style:none;display:grid;gap:9px;margin:18px 0 24px}.plan li{padding-left:24px;position:relative;font-size:15px}
+.plan li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}
+.plan .btn{margin-top:auto;width:100%;padding:15px}
+.plan.best{background:linear-gradient(180deg,rgba(34,197,94,.16),var(--card2));border:2px solid var(--green);transform:translateY(-10px);box-shadow:0 30px 70px rgba(34,197,94,.18)}
+.plan .ribbon{align-self:flex-start;font-size:12px;font-weight:900;background:var(--green);color:#04170a;padding:5px 10px;border-radius:999px;margin-bottom:10px}
+.freeline{text-align:center;color:var(--mut);margin-top:26px;font-size:15px}
+.pay{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}.pay span{font-size:13px;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+/* FAQ */
+.faq{max-width:780px;margin:0 auto;display:grid;gap:12px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}.faq summary{cursor:pointer;font-weight:800;font-size:17px}.faq p{color:var(--mut);margin-top:10px}
+.final{text-align:center}
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--mut);font-size:13px}footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+.wa{position:fixed;right:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:10px;background:#25d366;color:#05230f;font-weight:900;text-decoration:none;border-radius:999px;padding:14px 18px;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.wa svg{width:22px;height:22px}
+
+/* v3 */
+.flow3{display:grid;gap:56px}
+.row{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px;align-items:center}
+.row.rev{grid-template-columns:1.2fr .8fr}.row.rev .txt{order:2}
+.row .txt{min-width:0}.row .num{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--violet2);font-weight:900;margin-bottom:14px}
+.row h3{font-size:clamp(24px,2.4vw,32px);line-height:1.1}.row p{color:var(--mut);margin-top:12px;font-size:17px}
+.clip{position:relative;width:100%;max-width:100%;aspect-ratio:16/10;border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 70px rgba(124,58,237,.25);background:#120c2c}
+.clip video{display:block;width:100%;height:100%;object-fit:cover}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.chips span{font-size:13px;font-weight:800;padding:7px 12px;border-radius:999px;background:rgba(139,92,246,.16);color:#d8ccff;border:1px solid var(--line)}
+.flybar{margin-top:18px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#f2f2f2}.flybar img{display:block;width:100%}
+.flynote{font-size:14px;color:var(--mut);margin-top:8px}
+.train{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}
+.tcard b{display:block;font-size:30px;line-height:1}.tcard h4{font-size:18px;margin:10px 0 6px}.tcard p{color:var(--mut);font-size:15px;margin:0}
+@media (max-width:960px){.row,.row.rev{grid-template-columns:1fr;gap:22px}.row.rev .txt{order:0}.train{grid-template-columns:1fr}}
+@media (max-width:960px){
+ nav.top{display:none}.hero{grid-template-columns:1fr;text-align:center;gap:28px}.lead{margin-inline:auto}.hero-cta,.stores{justify-content:center}
+ .stats{grid-template-columns:repeat(2,1fr)}.stats .stat:last-child{grid-column:span 2}
+ .steps,.types,.plans,.opp{grid-template-columns:1fr}.incl{grid-template-columns:repeat(2,1fr)}.incl .inc:last-child{grid-column:span 2}
+ .opp h2,.opp .sub{text-align:center;margin-inline:auto}.plan.best{transform:none}section{padding-block:52px}
+ .wa span{display:none}
+}
+</style>
+<!-- ODDS-2739: Meta Pixel ODDSFY - PRINCIPAL (mesmo ID do oddsfy.ai). Sem advanced matching e sem autoConfig.
+     Europa (fuso Europe/*): só carrega depois do "Aceptar" no aviso de cookies; fora dela, carrega direto. -->
+<script>
+window.__loadPixel=function(){if(window.fbq)return;
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('set','autoConfig',false,'29416657124633782');fbq('init','29416657124633782');fbq('track','PageView');fbq('track','ViewContent',{content_name:'startagent_landing_es'});};
+(function(){var eu=false;try{eu=/^Europe\//.test(Intl.DateTimeFormat().resolvedOptions().timeZone)}catch(e){}
+var c=null;try{c=localStorage.getItem('sa_consent')}catch(e){}
+window.__saEU=eu;if(!eu||c==='yes')window.__loadPixel();})();
+</script>
+</head>
+<body>
+<header><div class="wrap">
+ <a class="brand" href="#">Start<b>Agent</b></a>
+ <nav class="top"><a href="#como">Cómo funciona</a><a href="#ganhar">Gana con tu agente</a><a href="#planos">Planes</a></nav>
+ <a class="btn sm ghost site" href="https://oddsfy.ai/es/" target="_blank" rel="noopener" style="margin-right:10px">Conocer Oddsfy</a><a class="btn sm cta" href="https://oddsfy.ai/es/market?tab=planos">Empezar ahora</a>
+</div></header>
+<main>
+<div class="wrap hero">
+ <div>
+  <span class="eyebrow">Agentes de machine learning · de Oddsfy</span>
+  <h1>Crea tu propio <em>agente de IA</em> de machine learning y véndelo al mundo entero</h1>
+  <p class="lead">Tú armas la cinta, nosotros la entrenamos con el mismo método de nuestros agentes. Opera 24 horas al día, todo queda registrado en la vitrina y, si da resultado, lo vendes a quien quieras.</p>
+  <div class="hero-cta"><a class="btn cta" href="https://oddsfy.ai/es/market?tab=planos">Empezar ahora →</a><a class="btn ghost site" href="https://oddsfy.ai/es/" target="_blank" rel="noopener">Conocer Oddsfy ↗</a><small>Mira el video ▶</small></div>
+  <div class="stores"><span> App Store</span><span>▶ Google Play</span><span>AltStore</span><span>🌐 Web en 3 idiomas</span></div>
+ </div>
+ <div class="vsl"><video id="vsl" controls playsinline preload="metadata" poster="media/vsl_es_poster.jpg"><source src="media/vsl_es.mp4" type="video/mp4"></video></div>
+</div>
+
+<section id="prova"><div class="wrap">
+ <h2>Nuestros agentes de IA, en números</h2><p class="sub">Agentes de machine learning de Oddsfy, con cada operación registrada.</p>
+ <div class="stats">
+  <div class="stat"><b>+40</b><span>agentes de IA</span></div>
+  <div class="stat"><b>53.531</b><span>operaciones</span></div>
+  <div class="stat"><b>52%</b><span>win rate</span></div>
+  <div class="stat"><b>9,1%</b><span>ROI</span></div>
+  <div class="stat"><b>+4.914u</b><span>unidades de ganancia</span></div>
+ </div>
+ <p class="note">Fútbol, básquet y béisbol. <a href="https://oddsfy.ai/artigos/ml-agents-50k-bets/" target="_blank" rel="noopener">Lee el artículo completo</a> · Los resultados pasados no garantizan resultados futuros.</p>
+</div></section>
+
+<section id="como"><div class="wrap">
+ <h2>Cómo funciona</h2><p class="sub">Del primer clic a tu agente vendiendo en el Marketplace. Sin programar.</p>
+ <div class="flow3">
+  <div class="row"><div class="txt"><span class="num">1</span><h3>Haz clic en "Entrena tu agente"</h3><p>El área de machine learning tiene tres entradas, para que la encuentres fácil:</p><div class="chips"><span>Stories del Home</span><span>My Agents</span><span>Taller</span></div></div>
+   <div class="clip"><video autoplay muted loop playsinline preload="metadata"><source src="media/c1_entrar.webm" type="video/webm"><source src="media/c1_entrar.mp4" type="video/mp4"></video></div></div>
+  <div class="row rev"><div class="txt"><span class="num">2</span><h3>Arma la cinta</h3><p>Deporte, momento del partido, marcador, mercado, ligas y el modelo. Antes de entrenar ya ves cuántos partidos hay en la base y cuánto cuesta.</p><div class="flybar"><img src="media/fly.png" alt="Fly, la IA de Oddsfy"></div><p class="flynote">¿Dudas en algún paso? Pregúntale a Fly, nuestra IA, ahí mismo.</p></div>
+   <div class="clip"><video autoplay muted loop playsinline preload="metadata"><source src="media/c2_montar.webm" type="video/webm"><source src="media/c2_montar.mp4" type="video/mp4"></video></div></div>
+  <div><div class="row" style="align-items:start"><div class="txt"><span class="num">3</span><h3>Nosotros entrenamos. Tú decides.</h3><p>Tu pedido entra en la fila de entrenamiento. Cuando termina, recibes el informe completo y eliges qué hacer.</p></div>
+   <div class="train"><div class="tcard"><b>🚀</b><h4>Lanzar</h4><p>¿Salió positivo? Pon el agente en vivo.</p></div><div class="tcard"><b>🔁</b><h4>Reentrenar</h4><p>Ajusta la cinta y entrena de nuevo.</p></div><div class="tcard"><b>🗑️</b><h4>Descartar</h4><p>¿No quedó bien? Descártalo y empieza otro.</p></div></div></div></div>
+  <div class="row"><div class="txt"><span class="num">4</span><h3>Todo queda registrado en la vitrina</h3><p>Tu agente entra en la vitrina junto a los demás, aparece en On Fire cuando está en racha, y cada entrada se liquida automáticamente en el analytics: win rate, ROI y ganancia en unidades.</p></div>
+   <div class="clip"><video autoplay muted loop playsinline preload="metadata"><source src="media/c3_vitrine.webm" type="video/webm"><source src="media/c3_vitrine.mp4" type="video/mp4"></video></div></div>
+  <div class="row rev" id="ganhar"><div class="txt"><span class="num">5</span><h3>Marketplace: compra y vende</h3><p>¿Quieres comprar? Suscríbete a los agentes y servicios de la comunidad y recibe las entradas en tu feed. ¿Quieres vender? Pon tu agente a la venta para todo el mundo y quédate con el 93% del valor.</p>
+    <div class="oppcard" style="margin-top:20px;padding:22px"><div class="bigquote" style="font-size:52px">+200</div><p style="margin-top:4px"><b style="color:var(--ink)">clientes de un solo usuario</b> pagando por su servicio en el Marketplace.</p></div></div>
+   <div class="clip"><video autoplay muted loop playsinline preload="metadata"><source src="media/c4_market.webm" type="video/webm"><source src="media/c4_market.mp4" type="video/mp4"></video></div></div>
+ </div>
+ <div style="text-align:center;margin-top:56px"><a class="btn cta" href="https://oddsfy.ai/es/market?tab=planos">Quiero crear mi agente →</a></div>
+</div></section>
+
+<section id="elite"><div class="wrap">
+ <h2>Qué incluye el Elite</h2><p class="sub">Agentes que ya dan resultado, más el área de machine learning para crear los tuyos.</p>
+ <div class="incl">
+  <div class="inc"><b>12</b><span>agentes oficiales incluidos</span></div>
+  <div class="inc"><b>+2</b><span>agentes rentables a tu elección</span></div>
+  <div class="inc"><b>2</b><span>agentes de machine learning en vivo</span></div>
+  <div class="inc"><b>8</b><span>agentes de algoritmo (hasta 20)</span></div><div class="inc"><b>93%</b><span>del valor de las ventas queda para ti</span></div>
+ </div>
+</div></section>
+
+<section id="planos"><div class="wrap">
+ <h2>Elige tu plan</h2><p class="sub">Para crear agentes de machine learning, el Elite. Para solo vender en el Marketplace, el mínimo es el Pro.</p>
+ <div class="plans">
+  <div class="plan"><h3>Pro</h3><p class="who">Para quien quiere vender su propio agente</p><div class="p">US$ 11,86 <small>/mes</small></div><p class="p2">&nbsp;</p><ul><li>Vende en el Marketplace a todo el mundo</li><li>5 agentes de algoritmo incluidos (hasta 12)</li><li>Sigue y suscríbete a agentes de la comunidad</li></ul><a class="btn ghost cta" href="https://oddsfy.ai/es/market?tab=planos">Suscribirme al Pro</a></div>
+  <div class="plan best"><span class="ribbon">MÁS ELEGIDO</span><h3>Elite trimestral</h3><p class="who">Para quien quiere crear agentes de IA</p><div class="p">US$ 22,62 <small>/mes</small></div><p class="p2">US$ 67,85 cada 3 meses</p><ul><li><b>1 agente de IA gratis para crear</b></li><li>Todo el Elite: 12 agentes + 2 a tu elección</li><li>Venta en el Marketplace incluida</li></ul><a class="btn cta" href="https://oddsfy.ai/es/market?tab=planos">Suscribirme al Elite trimestral</a></div>
+  <div class="plan"><h3>Elite mensual</h3><p class="who">Todo el Elite, mes a mes</p><div class="p">US$ 25,43 <small>/mes</small></div><p class="p2">Semestral y anual: hasta 35% de descuento</p><ul><li>12 agentes oficiales + 2 a tu elección</li><li>2 agentes de machine learning en vivo</li><li>8 agentes de algoritmo incluidos (hasta 20)</li><li>Venta en el Marketplace incluida</li></ul><a class="btn ghost cta" href="https://oddsfy.ai/es/market?tab=planos">Suscribirme al Elite</a></div>
+ </div>
+ <p class="freeline" style="margin-top:18px;font-size:13px">Valores en dólares al cambio del día; el cobro se convierte a tu moneda en el checkout.</p>
+ <p class="freeline">¿Quieres conocerlo antes? Crea tu cuenta gratis y conversa con Fly.</p>
+ <div class="pay"><span>Tarjeta</span><span>Pix (Brasil)</span><span>Cripto (USDT / USDC)</span></div>
+</div></section>
+
+<section id="duvidas"><div class="wrap">
+ <h2>Preguntas</h2><p class="sub"></p>
+ <div class="faq">
+  <details><summary>¿Necesito saber programar?</summary><p>No. Armas la cinta eligiendo opciones en la pantalla. Si tienes dudas, Fly, nuestra IA, responde ahí mismo.</p></details>
+  <details><summary>¿Qué deportes?</summary><p>Fútbol, básquet y béisbol hoy, y más deportes en camino.</p></details>
+  <details><summary>¿Cómo vendo mi agente?</summary><p>Desde el plan Pro, publicas el agente en el Marketplace, defines el precio y cualquier persona en el mundo puede alquilarlo.</p></details>
+  <details><summary>¿Cómo pago?</summary><p>Tarjeta o cripto (USDT/USDC en la red Polygon). En Brasil, también Pix.</p></details>
+ </div>
+</div></section>
+
+<section class="final"><div class="wrap">
+ <h2>Tu agente puede empezar a trabajar hoy</h2><p class="sub">Crea tu cuenta, elige el plan y arma tu primer agente en pocos minutos.</p>
+ <a class="btn cta" href="https://oddsfy.ai/es/market?tab=planos">Empezar ahora →</a> <a class="btn ghost site" href="https://oddsfy.ai/es/" target="_blank" rel="noopener" style="margin-left:10px">Conocer Oddsfy ↗</a>
+</div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Oddsfy · EYESCOUDATA LTDA</span><span><a href="https://oddsfy.ai/legal">Términos y privacidad</a></span></div></footer>
+<a class="wa" href="https://wa.me/5551994153779" target="_blank" rel="noopener" title="¿Dudas? Habla con nosotros"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg><span>¿Dudas? Habla con nosotros</span></a>
+<div id="ck" style="display:none;position:fixed;left:16px;right:16px;bottom:16px;z-index:60;max-width:720px;margin:0 auto;background:#17113a;border:1px solid rgba(167,139,250,.35);border-radius:16px;padding:16px 18px;color:#f4f1ff;font-size:14px;box-shadow:0 20px 50px rgba(0,0,0,.5)">
+ <div style="margin-bottom:12px">Usamos cookies de medición (Meta Pixel) para entender de dónde vienen las visitas y mejorar nuestros anuncios. Tú eliges.</div>
+ <div style="display:flex;gap:10px;justify-content:flex-end"><button id="ckn" style="padding:10px 16px;border-radius:999px;border:1px solid rgba(167,139,250,.35);background:transparent;color:#f4f1ff;font-weight:800;cursor:pointer">Rechazar</button><button id="cky" style="padding:10px 16px;border-radius:999px;border:1px solid rgba(167,139,250,.35);background:transparent;color:#f4f1ff;font-weight:800;cursor:pointer">Aceptar</button></div>
+</div>
+<script>(function(){var c=null;try{c=localStorage.getItem('sa_consent')}catch(e){}if(!window.__saEU||c)return;var el=document.getElementById('ck');el.style.display='block';
+function set(v){try{localStorage.setItem('sa_consent',v)}catch(e){}el.style.display='none';if(v==='yes')window.__loadPixel();}
+document.getElementById('cky').onclick=function(){set('yes')};document.getElementById('ckn').onclick=function(){set('no')};})();</script>
+<script>(function(){var q=new URLSearchParams(location.search),k=new URLSearchParams();q.forEach(function(v,n){if(/^(utm_|fbclid|gclid)/.test(n))k.set(n,v)});if(!k.toString())return;document.querySelectorAll('a.cta').forEach(function(a){var u=new URL(a.href);k.forEach(function(v,n){u.searchParams.set(n,v)});a.href=u.toString()})})();
+document.querySelectorAll('a.cta').forEach(function(a){a.addEventListener('click',function(){try{window.fbq&&fbq('trackCustom','CTAClick',{destination:'checkout'})}catch(e){}})});</script>
+<script>(function(){var v=document.getElementById('vsl');if(!v)return;var s50=0;v.addEventListener('timeupdate',function(){if(!s50&&v.duration&&v.currentTime/v.duration>=.5){s50=1;try{window.fbq&&fbq('trackCustom','VSL50')}catch(e){}}});})();</script>
+</body></html>
